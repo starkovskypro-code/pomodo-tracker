@@ -1,0 +1,94 @@
+/**
+ * ГЛОБАЛЬНЫЕ СТИЛИ
+ * 
+ * Здесь находятся только базовые стили:
+ * - CSS Reset (обнуление стандартных стилей браузера)
+ * - Типографика (шрифты)
+ * - Общие переменные
+ * 
+ * Все остальные стили находятся внутри компонентов (scoped).
+ */
+
+/* --- CSS RESET --- */
+
+/* Обнуляем отступы и рамки для всех элементов */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Базовые стили для html и body */
+html {
+  /* Плавный скролл */
+  scroll-behavior: smooth;
+}
+
+body {
+  /* Шрифт: Inter если есть, иначе системный */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  
+  /* Размер шрифта по умолчанию */
+  font-size: 16px;
+  
+  /* Высота строки */
+  line-height: 1.5;
+  
+  /* Цвет текста */
+  color: #111827;
+  
+  /* Фон */
+  background-color: #F9FAFB;
+  
+  /* Улучшенный рендеринг шрифтов на Mac */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Корневой элемент приложения */
+#app {
+  min-height: 100vh;
+}
+
+/* --- ТИПОГРАФИКА --- */
+
+/* Заголовки */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* Ссылки */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Списки */
+ul, ol {
+  list-style: none;
+}
+
+/* Изображения */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Кнопки и поля ввода наследуют шрифт */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* --- ПОДКЛЮЧЕНИЕ ШРИФТА INTER --- */
+
+/* Если хотите использовать Google Fonts, раскомментируйте в index.html:
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+*/
