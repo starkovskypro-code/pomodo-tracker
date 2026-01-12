@@ -124,8 +124,9 @@ function resume() {
 }
 
 function stop() {
-  stopPomodoro();
+  // Важно: emit ДО stopPomodoro, т.к. stop сбрасывает isLinkedToTask
   emit('stop');
+  stopPomodoro();
 }
 
 function handleSkip() {
