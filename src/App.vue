@@ -3,7 +3,6 @@
   
   Содержит:
   - Боковую навигацию
-  - Глобальный Pomodoro таймер
   - Основное содержимое (router-view)
 -->
 
@@ -14,17 +13,6 @@
       <!-- Логотип -->
       <div class="nav__header">
         <h1 class="nav__logo">⏱ Time Tracker</h1>
-      </div>
-      
-      <!-- Глобальный Pomodoro (под логотипом) -->
-      <div class="nav__pomodoro">
-        <MiniPomodoro 
-          @work-start="handlePomodoroWorkStart"
-          @work-pause="handlePomodoroPause"
-          @work-resume="handlePomodoroResume"
-          @break-start="handlePomodoroBreakStart"
-          @stop="handlePomodoroStop"
-        />
       </div>
       
       <!-- Ссылки -->
@@ -59,7 +47,7 @@
           <router-link to="/trash" class="nav__link" active-class="nav__link--active">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="3,6 5,6 21,6"></polyline>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2-2v2"></path>
               <line x1="10" y1="11" x2="10" y2="17"></line>
               <line x1="14" y1="11" x2="14" y2="17"></line>
             </svg>
@@ -77,45 +65,9 @@
 </template>
 
 <script setup>
-import MiniPomodoro from './components/timer/MiniPomodoro.vue';
 import { useTimer } from './composables/useTimer.js';
-import { usePomodoro } from './composables/usePomodoro.js';
 
 const timer = useTimer();
-const pomodoro = usePomodoro();
-
-// --- Pomodoro синхронизация ---
-
-function handlePomodoroWorkStart() {
-  if (timer.isRunning.value) {
-    timer.resumeTicking();
-  }
-}
-
-function handlePomodoroPause() {
-  if (timer.isRunning.value) {
-    timer.pauseTicking();
-  }
-}
-
-function handlePomodoroResume() {
-  if (timer.isRunning.value) {
-    timer.resumeTicking();
-  }
-}
-
-function handlePomodoroBreakStart() {
-  if (timer.isRunning.value) {
-    timer.pauseTicking();
-  }
-}
-
-// Остановка Pomodoro — останавливаем task timer ТОЛЬКО если они связаны
-async function handlePomodoroStop() {
-  if (pomodoro.isLinkedToTask.value && timer.isRunning.value) {
-    await timer.stop();
-  }
-}
 </script>
 
 <style scoped>
@@ -179,13 +131,6 @@ async function handlePomodoroStop() {
 .nav__link--active {
   background-color: #6366F1;
   color: white;
-}
-
-/* Pomodoro под логотипом */
-.nav__pomodoro {
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .main {

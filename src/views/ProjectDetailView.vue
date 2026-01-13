@@ -143,7 +143,6 @@ import TaskList from '../components/task/TaskList.vue';
 import TaskEditForm from '../components/task/TaskEditForm.vue';
 import ProjectForm from '../components/project/ProjectForm.vue';
 import { useTimer } from '../composables/useTimer.js';
-import { usePomodoro } from '../composables/usePomodoro.js';
 import { useTasks } from '../composables/useTasks.js';
 import { formatMoney } from '../utils/calculations.js';
 import { getProjectById, updateProject, deleteProject } from '../data/projectRepository.js';
@@ -153,7 +152,6 @@ import { addManualTimeEntry } from '../data/timeEntryRepository.js';
 const route = useRoute();
 const router = useRouter();
 const timer = useTimer();
-const pomodoro = usePomodoro();
 const { tasks, loadTasksByProject, addTask } = useTasks();
 
 // Состояние
@@ -220,16 +218,10 @@ async function handleAddTask(taskName) {
 
 async function handleStartTimer(taskId) {
   await timer.start(taskId);
-  // Автозапуск Pomodoro при старте задачи (привязанный режим)
-  if (pomodoro.mode.value === 'idle') {
-    pomodoro.start('work', true); // true = привязан к задаче
-  }
 }
 
 async function handleStopTimer() {
   await timer.stop();
-  // Останавливаем Pomodoro при остановке задачи
-  pomodoro.stop();
   await loadTasksByProject(projectId.value);
 }
 

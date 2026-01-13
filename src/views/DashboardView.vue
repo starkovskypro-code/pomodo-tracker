@@ -22,7 +22,6 @@
         :is-running="timer.isRunning.value"
         :active-task="timer.activeTask.value"
         :elapsed-seconds="timer.elapsedSeconds.value"
-        :is-paused="timer.isPaused.value"
         @stop="handleStopTimer"
       />
     </section>

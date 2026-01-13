@@ -21,7 +21,6 @@ const activeTaskId = ref(null);
 const activeTask = ref(null);
 const startTime = ref(null);
 const elapsedSeconds = ref(0);
-const isPaused = ref(false);
 let tickInterval = null;
 
 // Вычисляемое свойство: запущен ли таймер?
@@ -36,7 +35,7 @@ function startTicking() {
     }
 
     tickInterval = setInterval(() => {
-        if (startTime.value && !isPaused.value) {
+        if (startTime.value) {
             const now = new Date();
             const diffMs = now.getTime() - new Date(startTime.value).getTime();
             elapsedSeconds.value = Math.floor(diffMs / 1000);
@@ -49,14 +48,6 @@ function stopTicking() {
         clearInterval(tickInterval);
         tickInterval = null;
     }
-}
-
-function pauseTicking() {
-    isPaused.value = true;
-}
-
-function resumeTicking() {
-    isPaused.value = false;
 }
 
 /**
@@ -94,7 +85,6 @@ async function start(taskId) {
         activeTaskId.value = taskId;
         startTime.value = new Date();
         elapsedSeconds.value = 0;
-        isPaused.value = false;
 
         activeTask.value = await taskRepo.getTaskById(taskId);
         startTicking();
@@ -123,7 +113,6 @@ async function stop() {
         activeTask.value = null;
         startTime.value = null;
         elapsedSeconds.value = 0;
-        isPaused.value = false;
 
         stopTicking();
 
@@ -141,7 +130,6 @@ export function useTimer() {
     return {
         // Состояние (глобальное)
         isRunning,
-        isPaused,
         activeTaskId,
         activeTask,
         elapsedSeconds,
@@ -149,8 +137,6 @@ export function useTimer() {
         // Методы
         checkActiveTimer,
         start,
-        stop,
-        pauseTicking,
-        resumeTicking
+        stop
     };
 }
